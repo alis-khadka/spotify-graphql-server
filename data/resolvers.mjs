@@ -1,4 +1,6 @@
-const fetch = require('node-fetch');
+import fetch from "node-fetch";
+
+import client_credentials from "./client_credentials.js";
 
 function errorMsg(error) {
   if (error) {
@@ -18,9 +20,6 @@ const headers = {
   Accept: 'application/json',
   Authorization: '',
 };
-
-const client_credentials = require('./client_credentials');
-
 let awaitingAuthorization;
 
 // const spotifyProxy = async ()  => {
@@ -49,8 +48,9 @@ const haveHeadersWithAuthToken = async () => {
   return await spotifyProxy();
 };
 
-module.exports.fetchArtistsByName = async (name) => {
-  console.log(`debug: query artist ${name} `);
+
+export const fetchArtistsByName = async (name) => {
+    console.log(`debug: query artist ${name} `);
 
   const response = await fetch(
     `https://api.spotify.com/v1/search?q=${name}&type=artist`,
@@ -66,7 +66,7 @@ module.exports.fetchArtistsByName = async (name) => {
   );
 };
 
-module.exports.fetchPlaylistByName = async (name) => {
+export const fetchPlaylistByName = async (name) => {
   console.log(`debug: query playlist ${name} `);
 
   const response = await fetch(
@@ -83,7 +83,7 @@ module.exports.fetchPlaylistByName = async (name) => {
   );
 };
 
-module.exports.fetchPlaylistById = async (id) => {
+export const fetchPlaylistById = async (id) => {
   console.log(`debug: query playlist ${id} `);
 
   const response = await fetch(`https://api.spotify.com/v1/playlists/${id}`, {
@@ -102,8 +102,8 @@ module.exports.fetchPlaylistById = async (id) => {
   return spotifyJsonToPlaylistById(data);
 };
 
-const fetchAlbumsOfArtist = async (artistId, limit) => {
-  console.log(`debug: query albums of artist ${artistId} `);
+export const fetchAlbumsOfArtist = async (artistId) => {
+    console.log(`debug: query albums of artist ${artistId} `);
 
   const response = await fetch(
     `https://api.spotify.com/v1/artists/${artistId}/albums`,
@@ -117,7 +117,7 @@ const fetchAlbumsOfArtist = async (artistId, limit) => {
   return (data.items || []).map((albumRaw) => spotifyJsonToAlbum(albumRaw));
 };
 
-const fetchTracksOfPlaylist = async (playlistId, limit) => {
+export const fetchTracksOfPlaylist = async (playlistId, limit) => {
   console.log(`debug: query tracks of playlist ${playlistId} `);
 
   const response = await fetch(
@@ -138,7 +138,7 @@ const fetchTracksOfPlaylist = async (playlistId, limit) => {
   );
 };
 
-const fetchTracksOfAlbum = async (albumId, limit) => {
+export const fetchTracksOfAlbum = async (albumId, limit) => {
   console.log(`debug: query tracks of playlist ${albumId} `);
 
   const response = await fetch(
@@ -153,9 +153,7 @@ const fetchTracksOfAlbum = async (albumId, limit) => {
   return (data.items || []).map((trackRaw) => spotifyJsonToTrack(trackRaw));
 };
 
-module.exports.fetchAlbumsOfArtist = fetchAlbumsOfArtist;
-
-const spotifyJsonToArtist = async (raw) => {
+export const spotifyJsonToArtist = async (raw) => {
   return {
     // fills with raw data (by ES6 spread operator):
     ...raw,
@@ -175,7 +173,7 @@ const spotifyJsonToArtist = async (raw) => {
   };
 };
 
-const spotifyJsonToPlaylistById = async (raw) => {
+export const spotifyJsonToPlaylistById = async (raw) => {
   return {
     // fills with raw data (by ES6 spread operator):
     ...raw,
@@ -198,7 +196,7 @@ const spotifyJsonToPlaylistById = async (raw) => {
   };
 };
 
-const spotifyJsonToPlaylist = async (raw) => {
+export const spotifyJsonToPlaylist = async (raw) => {
   return {
     // fills with raw data (by ES6 spread operator):
     ...raw,
@@ -221,7 +219,7 @@ const spotifyJsonToPlaylist = async (raw) => {
   };
 };
 
-const spotifyJsonToAlbum = (albumRaw) => {
+export const spotifyJsonToAlbum = (albumRaw) => {
   return {
     // fills with raw data (by ES6 spread operator):
     ...albumRaw,
@@ -240,7 +238,7 @@ const spotifyJsonToAlbum = (albumRaw) => {
   };
 };
 
-const spotifyJsonToTrack = (trackRaw) => {
+export const spotifyJsonToTrack = (trackRaw) => {
   return {
     // fills with raw data (by ES6 spread operator):
     ...trackRaw,

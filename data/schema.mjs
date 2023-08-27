@@ -1,8 +1,6 @@
-let {
-    buildSchema
-} = require('graphql');
+import { buildSchema } from "graphql";
 
-const schema = buildSchema(`
+export const schema = buildSchema(`
 # The root of all queries:
 
 type Query {
@@ -43,5 +41,3 @@ type Track {
   artist_name: String
 }
 `);
-
-module.exports = schema;

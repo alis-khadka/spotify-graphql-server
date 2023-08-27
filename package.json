@@ -2,40 +2,39 @@
   "name": "spot-graphql-server",
   "version": "0.3.0",
   "private": true,
+  "type": "module",
   "engines": {
     "yarn": "1",
-    "npm": "6",
-    "node": "8"
+    "npm": "9",
+    "node": ">=16.x"
   },
   "scripts": {
     "test": "npm run simpletest",
-    "simpletest": "node ./test/schemaTest",
-    "printSchema": "node ./bin/printSchema",
-    "watch": "nodemon serverInit.js",
-    "start": "node serverInit.js",
+    "build": "sass public/stylesheets/style.sass:public/stylesheets/style.css",
+    "simpletest": "node ./test/schemaTest.mjs",
+    "printSchema": "node ./bin/printSchema.mjs",
+    "watch": "npm run build ; nodemon serverInit.mjs",
+    "start": "npm run build ; node serverInit.mjs",
     "prepare": "yarn run snyk-protect",
     "snyk-protect": "snyk-protect"
   },
   "dependencies": {
-    "@snyk/protect": "1.744.0",
-    "body-parser": "1.19.1",
-    "cookie-parser": "1.4.5",
+    "@graphql-tools/mock": "9.0.0",
+    "@snyk/protect": "1.1206.0",
+    "body-parser": "1.20.2",
+    "cookie-parser": "1.4.6",
     "cors": "2.8.5",
-    "debug": "4.3.2",
-    "dotenv": "8.6.0",
-    "ejs": "3.1.6",
-    "express": "4.17.1",
+    "debug": "4.3.4",
+    "dotenv": "16.3.1",
+    "express": "4.18.2",
     "express-graphql": "0.12.0",
-    "graphql": "14.6.0",
-    "graphql-tools": "4.0.8",
+    "graphql": "16.8.0",
     "morgan": "1.10.0",
-    "node-fetch": "2.6.6",
-    "node-sass-middleware": "0.11.0",
-    "npm-check-updates": "^12.5.2",
-    "yarn": "^1.22.17"
+    "node-fetch": "3.3.1",
+    "sass": "1.66.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "3.0.1"
   },
   "snyk": true
 }
