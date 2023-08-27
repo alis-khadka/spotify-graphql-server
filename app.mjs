@@ -4,11 +4,13 @@ import logger from "morgan";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import cors from "cors";
+import { URLSearchParams } from 'url';
+global.URLSearchParams = URLSearchParams;
 
 import { graphqlHTTP } from "express-graphql";
 
 import {schema} from "./data/schema.mjs";
-import { fetchArtistsByName } from "./data/resolvers.mjs";
+import { fetchArtistsByName, fetchPlaylistByName, fetchPlaylistById } from "./data/resolvers.mjs";
 
 const app = express();
 
@@ -20,7 +22,9 @@ app.use(express.static(path.join('.', 'public')));
 
 const rootValue = {
     hi: () => 'Hello world!',
-    queryArtists: ({ byName }) => fetchArtistsByName(byName)
+    queryArtists: ({ byName }) => fetchArtistsByName(byName),
+    queryPlaylists: ({ byPlaylistName }) => fetchPlaylistByName(byPlaylistName),
+    queryIndividualPlaylist: ({ byPlaylistId }) => fetchPlaylistById(byPlaylistId),
 };
 
 // API middleware
