@@ -29,12 +29,18 @@ const rootValue = {
 
 // API middleware
 
-app.use('/graphql', cors(), graphqlHTTP(req => ({
+app.use(
+  '/graphql',
+  cors({
+    origin: 'https://spotify-graphql-client.vercel.app/',
+  }),
+  graphqlHTTP((req) => ({
     schema,
     graphiql: true,
     rootValue,
     pretty: process.env.NODE_ENV !== 'production',
-})));
+  }))
+);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
